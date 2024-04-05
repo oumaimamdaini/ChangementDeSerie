@@ -1,8 +1,6 @@
 package com.spring.changementserie.Service;
 
-import com.spring.changementserie.Models.ChangementSerie;
 import com.spring.changementserie.Models.Checklist;
-import com.spring.changementserie.Models.Produit;
 
 import java.util.List;
 import java.util.Optional;

@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +20,7 @@ import java.util.Set;
 public class Checklist implements Serializable {
     @Id
     @Column(name = "idChecklist")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idChecklist;
     @Column(name = "Titre")
     private String titre;
@@ -46,8 +46,11 @@ public class Checklist implements Serializable {
     @ManyToMany(mappedBy = "checklists")
     private Set<User> users;
 
-    @OneToMany(mappedBy = "checklist")
-    private List<Produit> produits;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "checklist")
+    private List<Produit> produits =new ArrayList<Produit>();
+    ;
+
+
 
     @ManyToOne
     @JoinColumn(name = "idChangementSerie")

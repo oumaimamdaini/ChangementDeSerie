@@ -2,6 +2,7 @@ package com.spring.changementserie.Service.impl;
 
 import com.spring.changementserie.Models.ChangementSerie;
 import com.spring.changementserie.Models.Produit;
+import com.spring.changementserie.Repository.ChecklistRepository;
 import com.spring.changementserie.Repository.ProduitRepository;
 import com.spring.changementserie.Service.ProduitInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class ProduitService implements ProduitInterface {
     @Autowired
     private ProduitRepository produitRepository;
+    private ChecklistRepository checklistRepository;
     @Override
     public void deleteProduit(Integer idProduit) {
 
@@ -26,9 +28,9 @@ public class ProduitService implements ProduitInterface {
     }
 
     @Override
-    public List<Produit> getAllProduit() {
+    public List<Produit> getAllProduit(Integer idChecklist) {
 
-        return produitRepository.findAll();
+        return produitRepository.findByChecklistIdChecklist(idChecklist);
     }
 
     @Override

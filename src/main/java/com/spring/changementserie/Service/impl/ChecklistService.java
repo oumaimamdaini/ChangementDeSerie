@@ -1,11 +1,11 @@
 package com.spring.changementserie.Service.impl;
 
-import com.spring.changementserie.Models.ChangementSerie;
 import com.spring.changementserie.Models.Checklist;
-import com.spring.changementserie.Models.DemandeChangement;
 import com.spring.changementserie.Models.Produit;
 import com.spring.changementserie.Repository.ChecklistRepository;
+
 import com.spring.changementserie.Service.ChecklistInterface;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,22 @@ import java.util.Optional;
 public class ChecklistService implements ChecklistInterface {
     @Autowired
     public ChecklistRepository checklistRepository;
+    private final ProduitService produitService;
+
+    public ChecklistService(ProduitService produitService) {
+        this.produitService = produitService;
+    }
     @Override
+    @Transactional
     public Checklist createChecklist(Checklist checklist) {
 
-        return checklistRepository.save(checklist);
+         Checklist savedCheck = checklistRepository.save(checklist);
+
+        for (Produit p: checklist.getProduits()){
+            p.setChecklist(savedCheck);
+            produitService.createProduit(p) ;
+        }
+        return savedCheck;
     }
 
     @Override
